@@ -1,5 +1,3 @@
-
-
 var model = {
   watchlistItems: [],
   browseItems: []
@@ -8,7 +6,7 @@ var model = {
 
 var api = {
   root: "https://api.themoviedb.org/3",
-  token: "TODO" // TODO 0 put your api key here
+  token: "e5101ebf6839ca4c30a8c43af5f7ddc0"     // TODO 0 put your api key here
 }
 
 
@@ -26,15 +24,17 @@ function discoverMovies(callback) {
 		success: function(response) {
 			console.log("We got a response from The Movie DB!");
 			console.log(response);
-			
+
 			// TODO 2
 			// update the model, setting its .browseItems property equal to the movies we recieved in the response
-			
-			// invoke the callback function that was passed in. 
+			response.results.forEach(function(movie){
+							 model.browseItems.push(movie.title);
+					 });
+			// invoke the callback function that was passed in.
 			callback();
 		}
 	});
-  
+
 }
 
 
@@ -44,22 +44,42 @@ function discoverMovies(callback) {
 function render() {
   // TODO 7
   // clear everything from both lists
-  
+	$('#section-watchlist > ul').empty();
+  $('#section-browse > ul').empty();
   // TODO 6
   // for each movie on the user's watchlist, insert a list item into the <ul> in the watchlist section
-  
-  // for each movie on the current browse list, 
+	model.watchlistItems.forEach(function(movie){
+      var li = $('<li/>').text(movie);
+      $('#section-watchlist > ul').append(li);
+  });
+  // for each movie on the current browse list,
   model.browseItems.forEach(function(movie) {
 		// TODO 3
 		// insert a list item into the <ul> in the browse section
-		
+			var li = $('<li />'); // document.createElement('li');
+			 li.text(movie);
+
 		// TODO 4
 		// the list item should include a button that says "Add to Watchlist"
-		
+
+		var button = $('<button />');
+		    button.text('Add to Watchlist');
+
+        li.append(button);
 		// TODO 5
 		// when the button is clicked, this movie should be added to the model's watchlist and render() should be called again
+		$('#section-browse > ul').append(li);
   });
-  
+  	$('#section-browse > ul button').off();
+  	$('#section-browse > ul button').on('click', function(evt){
+      console.log('hi there')
+      var movie = $($(evt.target).parent()[0].childNodes[0]).text();
+      model.watchlistItems.push(movie);
+      render();
+
+	});
+
+
 }
 
 
@@ -68,4 +88,3 @@ function render() {
 $(document).ready(function() {
   discoverMovies(render);
 });
-
