@@ -1,61 +1,129 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
   <meta charset="utf-8"/>
 
-  <script src="https://code.jquery.com/jquery-2.2.3.js"></script>  
+
+
+  <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
+
   <link rel="stylesheet" href="css/styles.css"/>
 
+
+
   <title>FlickList</title>
+
 </head>
+
 <body>
 
+
+
   <header id="big-header">
+
     <h1>FlickList</h1>
+
     <p>Keep a list of all the movies you've been meaning to watch.</p>
+
   </header>
 
+
+
   <section id="section-watchlist">
+
     <header>
+
       <h2>My Watchlist</h2>
+
       <hr/>
+
     </header>
 
+
+
     <ul></ul>
+
   </section>
+
+
 
   <section id="section-browse">
+
     <header>
+
       <h2>Browse Movies</h2>
-      <!-- 
-      TODO 6
-      add a <form> here for users to search for movies by title 
+
+
+
+      <!--
+
+      TODO 6 (DONE)
+
+      add a <form> here for users to search for movies by title
+
       -->
+
+      <form id="form-search">
+
+        <input type="text" name="query"/>
+
+        <input type="submit" value="Search By Title"/>
+
+      </form>
 
     </header>
 
+
+
+
+
+
+
     <ul></ul>
+
   </section>
+
+
 
   <script src="js/flicklist.js"></script>
 
   <script>
-    // TODO 8
-    // fill in the missing pieces of the code below
 
-    $("TODO 8a").submit(function(evt) {
+    $(document).ready(function() {
 
-      // first, we cancel the default action (which would leave the page)
-      evt.preventDefault();
+      // TODO 7 (DONE)
 
-      // figure out what the user typed
-      var searchTerm = $("TODO 8b").val();
+      // add a submit handler for the form above
 
-      // TODO 8c invoke the searchMovies function,
-      // passing in the search term, and render as the callback
+      // should cause a fetch and re-render
+
+      $("#form-search").submit(function(evt) {
+
+        evt.preventDefault();
+
+        var query = $("#form-search input[name=query]").val();
+
+        searchMovies(query, render);
+
+      });
+
+
+
+      // even though we are adding the search form, we still want to fetch
+
+      // immediately here on doc ready so that the user sees some content initially
+
+      discoverMovies(render);
 
     });
+
   </script>
 
-</body> 
+
+
+</body>
+
 </html>
